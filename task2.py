@@ -5,8 +5,8 @@ from datetime import datetime
 from prettytable import PrettyTable
 
 # Define variables
-TOKEN_ADDRESS = "0xc15b1eaec8aade6ce0a94fd44806f623fbf505c9"  # Replace with token address that you want to research
-OK_ACCESS_KEY = "a110371f-ea97-4eb5-a5d4-b3506c4e13ec"  # Replace with your OKLink access key
+TOKEN_ADDRESS = "TOKEN_ADDRESS"  # Replace with token address that you want to research
+OK_ACCESS_KEY = "YOUR_OKLinkAPIKey"  # Replace with your OKLink access key
 
 # Base URL for OKLink API
 BASE_URL = "https://www.oklink.com/api/v5/explorer"
