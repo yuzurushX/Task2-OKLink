@@ -1,13 +1,12 @@
 import requests
-import pprint
 import json
 from decimal import Decimal
 from datetime import datetime
 from prettytable import PrettyTable
 
 # Define variables
-TOKEN_ADDRESS = "TOKEN_CONTRACT_ADDRESS"  # Replace with token address that you want to research
-OK_ACCESS_KEY = "OKLINK_APIKEY"  # Replace with your OKLink access key
+TOKEN_ADDRESS = "0xe4042c7c1bf740b8ddb2ab43df6d9ed766b2513e"  # Replace with token address that you want to research
+OK_ACCESS_KEY = "a110371f-ea97-4eb5-a5d4-b3506c4e13ec"  # Replace with your OKLink access key
 
 # Base URL for OKLink API
 BASE_URL = "https://www.oklink.com/api/v5/explorer"
@@ -83,6 +82,7 @@ def fetch_holding_data():
             break      
     i=0
     total_quantity = 0
+    token_decimal = 9
     for item in all_holder:
         quantity = Decimal(item['TokenHolderQuantity'])
         total_quantity += quantity
@@ -90,7 +90,7 @@ def fetch_holding_data():
     for item in all_holder:
         quantity = Decimal(item['TokenHolderQuantity'])
         proportion = (quantity / total_quantity) * 100
-        formatted_quantity = quantity / Decimal(10**18)
+        formatted_quantity = quantity / Decimal(10**token_decimal)
         table.add_row([i+1, item['TokenHolderAddress'], formatted_quantity, f"{proportion:.18f}%"])
         i=i+1
     print(table)
@@ -99,13 +99,41 @@ def fetch_holding_data():
 
 # Function to fetch token liquidity data
 def fetch_liquidity_data():
-    print("Fetching token liquidity data...")
-    url = f"https://www.oklink.com/api/v5/explorer/polygon/api?module=token&action=tokenholderlist&contractaddress={TOKEN_ADDRESS}&page=1&offset=100"
+    print(f"\n---------------------------------------------------------------[Token Liquidity Data)]---------------------------------------------------------------\n")
+    url = f"{BASE_URL}/token/transaction-stats"
     headers = {"Ok-Access-Key": OK_ACCESS_KEY, "Content-type": "application/json"}
-    response = requests.get(url, headers=headers)
-    # Process the response data (parse JSON etc.) to get transactions and volume
-    # Implement additional logic to assess liquidity
-    print(response.json())  # Placeholder for data processing
+    params = {
+        'chainShortName': 'eth',
+        'tokenContractAddress': TOKEN_ADDRESS,
+        'limit': 100
+    }
+    all_transactions= []
+    current_page = 1
+    while True:
+        params['page'] = current_page
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            data = response.json().get("data", [])
+            if data:
+                transactions = holders = data[0].get('transactionAddressList', [])
+                all_transactions.extend(transactions)
+                current_page += 1
+                if len(data) < 100:  # Stop if fewer transactions are returned
+                    break
+            else:
+                break  # No more transaction data
+        else:
+            print(f"Error fetching transactions: {response.status_code}")
+            break      
+    total_transactions = 0
+    total_trading_volume = 0
+    for transaction in all_transactions:
+        txn_count = int(transaction.get('txnCount', 0)) # Convert to int
+        total_transactions += txn_count
+        txn_value_usd = float(transaction.get('txnValueUsd', 0.0))  # Convert to float
+        total_trading_volume += txn_value_usd      
+    print("Number of Transactions (24h):", total_transactions)
+    print(f"Trading Volume (24h): {total_trading_volume} USD")
     print()
     
 def fetch_token_tx():
