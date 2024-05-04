@@ -7,6 +7,7 @@ from prettytable import PrettyTable
 # Define variables
 TOKEN_ADDRESS = "TOKEN_ADDRESS"  # Replace with token address that you want to research
 OK_ACCESS_KEY = "YOUR_OKLinkAPIKey"  # Replace with your OKLink access key
+token_decimal = 18 #Adjust Token's Decimal
 
 # Base URL for OKLink API
 BASE_URL = "https://www.oklink.com/api/v5/explorer"
@@ -82,7 +83,6 @@ def fetch_holding_data():
             break      
     i=0
     total_quantity = 0
-    token_decimal = 9 #Adjust Token's Decimal
     for item in all_holder:
         quantity = Decimal(item['TokenHolderQuantity'])
         total_quantity += quantity
