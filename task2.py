@@ -82,7 +82,7 @@ def fetch_holding_data():
             break      
     i=0
     total_quantity = 0
-    token_decimal = 9
+    token_decimal = 9 #Adjust to researched token decimal
     for item in all_holder:
         quantity = Decimal(item['TokenHolderQuantity'])
         total_quantity += quantity
