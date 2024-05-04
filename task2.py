@@ -5,7 +5,7 @@ from datetime import datetime
 from prettytable import PrettyTable
 
 # Define variables
-TOKEN_ADDRESS = "0xe4042c7c1bf740b8ddb2ab43df6d9ed766b2513e"  # Replace with token address that you want to research
+TOKEN_ADDRESS = "0xc15b1eaec8aade6ce0a94fd44806f623fbf505c9"  # Replace with token address that you want to research
 OK_ACCESS_KEY = "a110371f-ea97-4eb5-a5d4-b3506c4e13ec"  # Replace with your OKLink access key
 
 # Base URL for OKLink API
@@ -49,7 +49,7 @@ def token_price_data():
             print("No data found.")
     else:
         print(f"Error fetching data: {response.status_code}")
-    print()  # Add an empty line after the table
+    print()  
 
 # Function to fetch token holding data
 def fetch_holding_data():
@@ -82,7 +82,7 @@ def fetch_holding_data():
             break      
     i=0
     total_quantity = 0
-    token_decimal = 9 #Adjust to researched token decimal
+    token_decimal = 9 #Adjust Token's Decimal
     for item in all_holder:
         quantity = Decimal(item['TokenHolderQuantity'])
         total_quantity += quantity
@@ -135,10 +135,11 @@ def fetch_liquidity_data():
     print("Number of Transactions (24h):", total_transactions)
     print(f"Trading Volume (24h): {total_trading_volume} USD")
     print()
+
+# Function to fetch token large transactions    
+def fetch_token_large_tx():
     
-def fetch_token_tx():
-    
-    minimum_amount = 500000
+    minimum_amount = 500000 #Set your minimum amount
     url = f"https://www.oklink.com/api/v5/explorer/token/transaction-list"
     headers = {"Ok-Access-Key": OK_ACCESS_KEY, "Content-type": "application/json"}
     params = {
@@ -178,7 +179,7 @@ def main():
     token_price_data()
     fetch_holding_data()
     fetch_liquidity_data()
-    fetch_token_tx()
+    fetch_token_large_tx()
 
 if __name__ == "__main__":
     main()
