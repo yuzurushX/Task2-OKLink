@@ -20,16 +20,20 @@ Open GPU(oGPU - 0x067def80d66fb69c276e53b641f37ff7525162f6) - Demand for cloud c
 
 Token Research:
 
-1. Basic Information: The token_info() function fetches fundamental token details like name, symbol, website, Twitter, and whitepaper. These form the basis for understanding the project behind the token.
+Basic Information: The token_info() function fetches fundamental token details like name, symbol, website, Twitter, and whitepaper. These form the basis for understanding the project behind the token.
+   
 Price Analysis:
 
-2. Historical Price Data: The token_price_data() function retrieves past price information. This is presented in a table (using PrettyTable) to potentially visualize trends, volatility, or price anomalies.
+Historical Price Data: The token_price_data() function retrieves past price information. This is presented in a table (using PrettyTable) to potentially visualize trends, volatility, or price anomalies.
+
 Distribution Analysis:
 
-3. Token Holders: The fetch_holding_data() function analyzes how the token supply is distributed. It lists holders by address, quantity held, and the proportion of the total supply they control. Understanding concentrated holdings is crucial for market analysis.
+Token Holders: The fetch_holding_data() function analyzes how the token supply is distributed. It lists holders by address, quantity held, and the proportion of the total supply they control. Understanding concentrated holdings is crucial for market analysis.
+
 Liquidity Analysis:
 
-4. Trading Activity: The fetch_liquidity_data() function looks at the token's overall trading activity. 24-hour transaction count and trading volume offer indicators of the token's liquidity.
+Trading Activity: The fetch_liquidity_data() function looks at the token's overall trading activity. 24-hour transaction count and trading volume offer indicators of the token's liquidity.
+
 Large Transaction Analysis:
 
-5. Whale Tracking: The fetch_token_large_tx() function specifically focuses on transactions exceeding a significant threshold. This highlights potential 'whale' activity that might heavily influence the token's price.
+Whale Tracking: The fetch_token_large_tx() function specifically focuses on transactions exceeding a significant threshold. This highlights potential 'whale' activity that might heavily influence the token's price.
